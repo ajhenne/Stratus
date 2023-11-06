@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ title }}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="static/style/main.css">
+        <link rel="stylesheet" href="static/style/login.css">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    </head>
+
+    <body>
+        <h1>Test, welcome to {{ title }}</h1>
+
+        <button id="login-button">Login</button>
+
+        {% include 'login.html' %}
+
+        <p>Just adding some text.</p>
+    </body>
+    <script src="{{ url_for('static', filename='scripts/login_manager.js') }}"></script>
+</html>

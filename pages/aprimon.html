@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aprimon Master Table {{title}}</title>
+    <link rel="stylesheet" href="static/style/main.css">
+    <link rel="stylesheet" href="static/style/login.css">
+    <link rel="stylesheet" href="static/style/aprimon.css">
+    <script>
+    
+    var userLoggedIn = (String("{{ login_status }}").toLowerCase() === 'true');
+    console.log(userLoggedIn, typeof userLoggedIn)</script>
+    
+</head>
+<body>
+
+    <div id="header-container">
+        <div id="title-container">
+            <h1>Aprimon Master Table</h1>
+            <p class="acknowledge">Version 0.0.1 | Created by Henne</p>
+            <p>My master table of all Aprimon I own. Where possible, Pokemon with hidden
+                abilities are caught with them. If you have any that I'm missing, don't
+                hesitate to make an offer! Otherwise, if you're looking for anything I
+                have spare, please consult the spare Aprimon table (WIP).
+            </p>
+            <p class="acknowledge">This website is heavily WIP, including design, functionality and pages.
+                It only as a way to display my database to you, you can't edit mine and
+                you do not have your own page. If there is enough (any) support perhaps
+                this can become a more fully fledged project that allows you to login,
+                store your Pokemon, etc., in a similar way. Though, keep in mind I have
+                no real experience in web or application development like this, so it'd
+                be a long and slow process.
+            </p>
+        </div>
+        <div class="btn-grid-container">
+            <button id="login-button" class="btn-grid {% if login_status %}hidden{% endif %}">Login</button>
+            <button id="logout-button" class="btn-grid {% if not login_status %}hidden{% endif %}">Logout</button>
+            <button id="edit-button" class="btn-grid" {% if not login_status %}disabled{% endif %}>Enable Edit</button>
+            <button id="add-aprimon-btn" class="btn-grid" {% if not login_status %}disabled{% endif %}>Add Row</button>
+        </div>
+    </div>
+
+    <!-- login button -->
+    
+
+    <!-- login popup -->
+
+    {% include 'login.html' %}
+
+    <!-- <div id="login-popup" class="popup hidden">
+        <div class="login-content">
+            <h2>Login</h2>
+            <form id="login-form">
+                <br>
+                <label for="login-input-pass">Password:</label>
+                <input type="text" id="login-input-pass" required>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+            <div id="error-box"></div>
+        </div>
+    </div> -->
+
+    <!-- Add Pokemon -->
+    
+
+
+    <div id="add-aprimon-popup" class="popup hidden">
+
+        <div id="add-aprimon-grd">
+
+            <div class="add-aprimon-content">
+                <h2>Add New Pokemon</h2>
+                <form id="add-row-form">
+
+                  <label for="add-aprimon-input">Search Pokemon:</label><br>
+                  <input type="text" id="add-aprimon-input" required>
+
+
+                  <div id="add-aprimon-balls">
+                    <div class="form-apriball">
+                        <label for="apriball-fast">Fast Ball</label>
+                        <input type="checkbox" id="apriball-fast">
+                        <img src="static/sprites/balls/fast-ball.png" alt="">
+                    </div>
+                    <div class="form-apriball">
+                        <label for="apriball-lure">Lure Ball</label>
+                        <input type="checkbox" id="apriball-lure">
+                        <img src="static/sprites/balls/lure-ball.png" alt="">
+                    </div>
+                    <div class="form-apriball">
+                        <label for="apriball-level">Level Ball</label>
+                        <input type="checkbox" id="level-fast">
+                        <img src="static/sprites/balls/level-ball.png" alt="">
+                    </div>
+                    <div class="form-apriball">
+                        <label for="apriball-heavy">Heavy Ball</label>
+                        <input type="checkbox" id="apriball-heavy">
+                        <img src="static/sprites/balls/heavy-ball.png" alt="">
+                    </div>
+                  </div>
+
+                  <button type="submit">Submit</button>
+                </form>
+              </div>
+
+              <div id="search-container"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <table id="aprimon-table">
+        <thead>
+        <tr>
+            <th class="pkmn-name">Name</th>
+            <th>Fast</th>
+            <th>Lure</th>
+            <th>Level</th>
+            <th>Heavy</th>
+            <th>Love</th>
+            <th>Moon</th>
+            <th>Dream</th>
+            <th>Safari</th>
+            <th>Beast</th>
+            <th>Sport</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data %}
+        <tr>
+            <td class="pkmn-name">{{ row.name }}</td>
+            <td class="ball"><img src="../static/sprites/balls/fast-ball.png" alt="" class="{% if row.fast == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/lure-ball.png" alt="" class="{% if row.lure == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/level-ball.png" alt="" class="{% if row.level == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/heavy-ball.png" alt="" class="{% if row.heavy == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/love-ball.png" alt="" class="{% if row.love == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/moon-ball.png" alt="" class="{% if row.moon == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/dream-ball.png" alt="" class="{% if row.dream == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/beast-ball.png" alt="" class="{% if row.beast == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/safari-ball.png" alt="" class="{% if row.safari == 0 %}greyscale{% endif %}"></td>
+            <td class="ball"><img src="../static/sprites/balls/sport-ball.png" alt="" class="{% if row.sport == 0 %}greyscale{% endif %}"></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+<script src="{{ url_for('static', filename='scripts/login_manager.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/aprimon.js') }}"></script>
+</html>
