@@ -1,33 +1,33 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const logoutBtn = document.getElementById('logout-button');
-  
-    logoutBtn.addEventListener('click', function() {
-      window.location.href = '/logout';
-      })
+document.addEventListener("DOMContentLoaded", function () {
+  const logoutBtn = document.getElementById('logout-button');
+
+  logoutBtn.addEventListener('click', function () {
+    window.location.href = '/logout';
+  })
+})
+
+// LOGIN BUTTON LISTENER
+document.addEventListener('DOMContentLoaded', function () {
+  const loginBtn = document.getElementById('login-button');
+  const popup = document.getElementById('login-popup');
+  const loginForm = document.getElementById('login-form');
+
+  loginBtn.addEventListener('click', function () {
+    popup.classList.remove('hidden');
+  });
+
+  loginForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const password = document.getElementById('login-input-pass').value;
+
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: password }),
     })
-  
-  // LOGIN BUTTON LISTENER
-  document.addEventListener('DOMContentLoaded', function() {
-    const loginBtn = document.getElementById('login-button');
-    const popup = document.getElementById('login-popup');
-    const loginForm = document.getElementById('login-form');
-  
-    loginBtn.addEventListener('click', function() {
-      popup.classList.remove('hidden');
-    });
-  
-    loginForm.addEventListener('submit', function(event) {
-      event.preventDefault();
-  
-      const password = document.getElementById('login-input-pass').value;
-  
-      fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username: password}),
-      })
       .then(response => response.json())
       .then(data => {
         if (data.status === 'success') {
@@ -44,5 +44,5 @@ document.addEventListener("DOMContentLoaded", function() {
       .catch(error => {
         console.error('Error:', error);
       });
-    });
   });
+});
