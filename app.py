@@ -45,6 +45,9 @@ def load_user(id):
 
 login_manager.init_app(app)
 
+### ######### ######################################################################
+
+apriballNames = ('fast', 'lure', 'level', 'heavy', 'love', 'moon', 'dream', 'safari', 'beast', 'sport')
 
 ### HOME PAGE ######################################################################
 
@@ -53,10 +56,8 @@ def index():
     # Check logged in.
     if current_user.is_authenticated:
         check_login_status = True
-        print('User logged in')
     else:
         check_login_status = False
-        print('User NOT logged in')
 
     return render_template("index.html", title='Stratus')
 
@@ -97,19 +98,20 @@ def aprimon():
     # Check logged in.
     if current_user.is_authenticated:
         check_login_status = True
-        print('User logged in')
     else:
         check_login_status = False
-        print('User NOT logged in')
-    return render_template('aprimon.html', data=row_data, login_status=check_login_status)
+    return render_template('aprimon.html', data=row_data, login_status=check_login_status, ball_list=apriballNames)
 
 @app.route('/add_aprimon', methods=['POST'])
 @login_required
 def add_row():
-    name = request.json.get('name')
-    if name:
+    name = request.json.get('pokemonName')
+    add_pokemon = {ballname: value for ballname, value in zip(apriballNames, request.json.get('apriballTypes'))}
+    add_pokemon['name'] = name
+
+    if name: # add valid pokemon check here
         with engine.connect() as conn:
-            addrow = insert(table_aprimon).values(name=name)
+            addrow = insert(table_aprimon).values(**add_pokemon)
             conn.execute(addrow)
             conn.commit()
             conn.close()
@@ -146,4 +148,6 @@ def search_pokemon():
 
 ##
 if __name__ == '__main__':
-    app.run(debug=True)
+
+    app.run()
+    # app.run(debug=True)
