@@ -3,7 +3,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user, c
 
 from sqlalchemy import create_engine, Table, MetaData, text, insert
 from sqlalchemy.orm import sessionmaker
-from classes import Pokemon
+from classes import Pokemon, Aprimon
 
 # Create tables.
 engine = create_engine('sqlite:///database.db')
@@ -105,18 +105,26 @@ def aprimon():
 @app.route('/add_aprimon', methods=['POST'])
 @login_required
 def add_row():
-    name = request.json.get('pokemonName')
+    name_id = int(request.json.get('selectedPokemon'))
     add_pokemon = {ballname: value for ballname, value in zip(apriballNames, request.json.get('apriballTypes'))}
-    add_pokemon['name'] = name
+    add_pokemon['internalId'] = name_id
 
-    if name: # add valid pokemon check here
+    try:
         with engine.connect() as conn:
+            already_exists = session.query(Aprimon).filter(Aprimon.internalId == name_id).first()
+            if already_exists:
+                return jsonify({'status': 'already_exists'})
+            name = session.query(Pokemon).filter(Pokemon.internalId == name_id).first().name
+            add_pokemon['name'] = name
+
             addrow = insert(table_aprimon).values(**add_pokemon)
             conn.execute(addrow)
             conn.commit()
             conn.close()
         return jsonify({'status': 'success'})
-    return jsonify({'status': 'error'})
+    
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)})
 
 @app.route('/search_pokemon', methods=['POST'])
 @login_required
