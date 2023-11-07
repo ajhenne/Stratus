@@ -61,6 +61,8 @@
                     <label for="add-aprimon-input">Search Pokemon:</label><br>
                     <input type="text" id="add-aprimon-input" name="add-aprimon-input" required>
 
+                    <input type="hidden" id="add-aprimon-selected" value='' required>
+
                     <!-- Create ball list. -->
                     <div id="add-aprimon-balls">
                         {% for x in ball_list %}
@@ -76,7 +78,7 @@
                 </form>
             </div>
 
-            <div id="search-container"></div>
+            <form id="search-container"></form>
 
         </div>
 

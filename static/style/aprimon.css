@@ -113,7 +113,7 @@ tr {
     row-gap: 10px;
 }
 
-.panel {
+.add-aprimon-search-panel {
     width: calc(100% - 20px);
     height: 60px;
     margin-left: auto;
@@ -125,22 +125,26 @@ tr {
     cursor: pointer;
 }
 
-.panel img {
+.add-aprimon-search-panel img {
     height: 100%;
     padding-left: 10px;
     padding-right: 10px;
 }
 
-.panel-text {
+.add-aprimon-search-panel-text {
     color: white;
 }
 
-.panel:hover {
+.add-aprimon-search-panel:hover {
     background-color: var(--highlight-orange);
 }
 
-.panel:hover .panel-text {
+.add-aprimon-search-panel:hover .add-aprimon-search-panel-text {
     color: black;
+}
+
+.add-aprimon-radio {
+    display: none;
 }
 
 #add-aprimon-balls {

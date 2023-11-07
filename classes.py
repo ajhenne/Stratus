@@ -14,3 +14,18 @@ class Pokemon(Base):
     hiddenAbility = Column(Boolean)
     abilities = Column(String)
     sprite = Column(String)
+
+class Aprimon(Base):
+    __tablename__ = 'aprimon_master'
+    internalId = Column(Integer, primary_key=True, autoincrement=False)
+    name = Column(String)
+    fast = Column(Boolean)
+    lure = Column(Boolean)
+    level = Column(Boolean)
+    heavy = Column(Boolean)
+    love = Column(Boolean)
+    moon = Column(Boolean)
+    dream = Column(Boolean)
+    safari = Column(Boolean)
+    beast = Column(Boolean)
+    sport = Column(Boolean)
