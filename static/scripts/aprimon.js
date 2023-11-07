@@ -1,20 +1,20 @@
 // ADD ROW LISTENER
 document.addEventListener('DOMContentLoaded', function () {
-
-  const apriballNames = ['fast', 'lure', 'level', 'heavy', 'love', 'moon', 'dream', 'safari', 'beast', 'sport'];
-
+  
+  // FORM POPUP =======================================================================================================
+  
   const addRowBtn = document.getElementById('add-aprimon-btn');
   const popup = document.getElementById('add-aprimon-popup');
-  const addRowForm = document.getElementById('add-row-form');
-  const searchGridContainer = document.getElementById('search-container');
-
-  // Show form.
+  
   addRowBtn.addEventListener('click', function () {
     popup.classList.remove('hidden');
   });
-
-  // Input form listener.
+  
+  // SEARCH HANDLER ===================================================================================================
+  
   const fieldInput = document.getElementById('add-aprimon-input');
+  const searchGridContainer = document.getElementById('search-container');
+
   fieldInput.addEventListener('input', searchName);
 
   function searchName() {
@@ -36,10 +36,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (data.status === 'success') {
           searchGridContainer.innerHTML = ''
           data.results.forEach(result => {
-            // console.log('static/sprites/pokemon/' + result.internalId + '.png')
 
-            const panel = document.createElement('div');
-            panel.classList.add('panel');
+            const panel = document.createElement('label');
+            panel.classList.add('add-aprimon-search-panel');
+            
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'aprimon-search-selection';
+            radio.value = result.internalId;
+            radio.classList.add('add-aprimon-radio')
+            panel.appendChild(radio);
 
             const image = document.createElement('img');
             image.src = 'static/sprites/pokemon/' + result.internalId + '.png';
@@ -50,6 +56,18 @@ document.addEventListener('DOMContentLoaded', function () {
             text.classList.add('panel-text');
             text.textContent = result.name
             panel.appendChild(text)
+            
+            panel.addEventListener('click', () => {
+              let radioButtons = document.querySelectorAll('.add-aprimon-search-panel');
+              radioButtons.forEach(function(l) {
+                l.classList.remove('option_selected');
+              });
+              panel.classList.add('option_selected');
+            });
+            // Listener to send selection to hidden submission form element.
+            radio.addEventListener('click', () => {
+              document.getElementById('add-aprimon-selected').value = result.internalId
+            });
 
             searchGridContainer.appendChild(panel);
           });
@@ -64,7 +82,35 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  // Highlight ball boxes.
+  // POKEMON SELECTION HANDLER ========================================================================================
+
+  // Just used to highlight the Pokemon selected. Was having a hard time doing this in pure CSS for some reason.
+  const radioButtons = document.querySelectorAll('.add-aprimon-search-panel');
+
+  radioButtons.forEach(function(radio_button) {
+      radio_button.addEventListener('click', function() {
+          radioButtons.forEach(function(l) {
+              l.classList.remove('option_selected');
+          });
+          this.classList.add('option_selected');
+      });
+  });
+  // const searchResults = document.querySelectorAll('.add-aprimon-search-panel input[type="radio"]');
+  // let selectedValue = null;
+
+  // searchResults.forEach(searchResult => {
+  //   searchResult.addEventListener('click', () => {
+  //     console.log("YES")
+  //     selectedValue = searchResult.id;
+  //     searchResult.classList.add('option_selected')
+
+  //   })
+  // })
+
+
+
+  // BALL SELECTION HANDLER ===========================================================================================
+
   const ball_checkboxes = document.querySelectorAll('.form-apriball input[type="checkbox"]')
 
   ball_checkboxes.forEach(checkbox => {
@@ -86,10 +132,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // SUBMISSION =======================================================================================================
+
+  const addRowForm = document.getElementById('add-row-form');
+  const apriballNames = ['fast', 'lure', 'level', 'heavy', 'love', 'moon', 'dream', 'safari', 'beast', 'sport'];
 
   // Submission.
   addRowForm.addEventListener('submit', function (event) {
     event.preventDefault();
+
+    // Guard clause to check a pokemon has been selected.
+    let selectedValue = document.getElementById('add-aprimon-selected').value;
+    if (selectedValue === '') {
+      alert("Please first search for and select a valid Pokemon.")
+      return;
+    };
 
     const formData = new FormData(event.target);
 
@@ -101,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Now apriballTypes is guaranteed to be a list with true or false values based on the checkboxes' states
     const data = {
-        pokemonName: formData.get('add-aprimon-input'),
+        selectedPokemon: selectedValue,
         apriballTypes: apriballTypes
     };  
 
@@ -116,8 +173,10 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(data => {
         if (data.status === 'success') {
           location.reload()
+        } else if (data.status === 'already_exists') {
+          alert('Pokemon already exists in database. Select a new one.')
         } else {
-          alert('Failed to add a new row.');
+          alert(data.message);
         }
       })
       .catch(error => console.error('Error:', error))
