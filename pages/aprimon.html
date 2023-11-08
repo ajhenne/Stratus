@@ -36,7 +36,8 @@
         <div class="btn-grid-container">
             <button id="login-button" class="btn-grid {% if login_status %}hidden{% endif %}">Login</button>
             <button id="logout-button" class="btn-grid {% if not login_status %}hidden{% endif %}">Logout</button>
-            <button id="edit-button" class="btn-grid" {% if not login_status %}disabled{% endif %}>Enable Edit</button>
+            <button id="edit-button" class="btn-grid" {% if not login_status %}disabled{% endif %}>Edit Table</button>
+            <button id="lock-button" class="btn-grid" style="display: none">Lock Table</button>
             <button id="add-aprimon-btn" class="btn-grid" {% if not login_status %}disabled{% endif %}>Add Row</button>
         </div>
     </div>
@@ -105,28 +106,15 @@
         </thead>
         <tbody>
             {% for row in data %}
-            <tr>
-                <td class="pkmn-name">{{ row.name }}</td>
-                <td class="ball"><img src="../static/sprites/balls/fast-ball.png" alt=""
-                        class="{% if row.fast == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/lure-ball.png" alt=""
-                        class="{% if row.lure == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/level-ball.png" alt=""
-                        class="{% if row.level == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/heavy-ball.png" alt=""
-                        class="{% if row.heavy == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/love-ball.png" alt=""
-                        class="{% if row.love == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/moon-ball.png" alt=""
-                        class="{% if row.moon == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/dream-ball.png" alt=""
-                        class="{% if row.dream == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/beast-ball.png" alt=""
-                        class="{% if row.beast == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/safari-ball.png" alt=""
-                        class="{% if row.safari == 0 %}greyscale{% endif %}"></td>
-                <td class="ball"><img src="../static/sprites/balls/sport-ball.png" alt=""
-                        class="{% if row.sport == 0 %}greyscale{% endif %}"></td>
+            <tr id="{{ row.internalId }}">
+                <td id="tab-pkmn-name" class="pkmn-name">{{ row.name }}</td>
+                {% for x in ball_list %}
+                <td id="tab-ball-{{ x }}" class="tab-ball-cell">
+                    <img src="../static/sprites/balls/{{ x }}-ball.png" alt=""
+                        data-ball="{{ x }}" data-selected="{{ row[x] }}"
+                        class="{% if row[x] == 0 %}greyscale{% endif %} tab-ball">
+                </td>
+                {% endfor %}
             </tr>
             {% endfor %}
         </tbody>

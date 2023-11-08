@@ -5,6 +5,8 @@ from sqlalchemy import create_engine, Table, MetaData, text, insert
 from sqlalchemy.orm import sessionmaker
 from classes import Pokemon, Aprimon
 
+import json
+
 # Create tables.
 engine = create_engine('sqlite:///database.db')
 meta = MetaData()
@@ -123,6 +125,25 @@ def add_row():
     
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
+
+@app.route('/update_apriballs', methods=['POST'])
+@login_required
+def update_balls():
+
+    try:
+        data = request.get_json()
+
+        if len(data) == 0:
+            return jsonify({'status': 'success', 'message': 'No data updated, returning.'}), 500
+        
+        for change in data:
+            session.query(Aprimon).filter(Aprimon.internalId == change['internalId']).update({change['selected_ball']: change['selected']})
+            session.commit()
+            
+        return jsonify({'status': 'success', 'message': f'Sucessfully updated {len(data)} records.'}), 200
+    
+    except Exception:
+        return jsonify({'error': 'An error occured whilst processing the request'}), 500
 
 @app.route('/search_pokemon', methods=['POST'])
 @login_required

@@ -32,3 +32,7 @@
 .option_selected {
     background-color: var(--accent-orange) !important;
 }
+
+.clickable {
+    cursor: pointer;
+}

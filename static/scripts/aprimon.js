@@ -1,17 +1,86 @@
-// ADD ROW LISTENER
 document.addEventListener('DOMContentLoaded', function () {
-  
+
+  // ENABLE EDIT ======================================================================================================
+
+  const editButton = document.getElementById('edit-button');
+  const lockButton = document.getElementById('lock-button');
+  const tableBalls = document.querySelectorAll('.tab-ball');
+  var changedData = [];
+
+  // EDIT BUTTON
+  editButton.addEventListener('click', function () {
+
+    lockButton.style = '';
+    editButton.style = 'display: none';
+
+    tableBalls.forEach(function (ball) {
+      ball.classList.add('clickable');
+      ball.addEventListener('click', editableApriballs);
+    });
+  });
+
+
+  // LOCK BUTTON
+  lockButton.addEventListener('click', function () {
+    
+    tableBalls.forEach(function (ball) {
+      ball.classList.remove('clickable');
+      ball.removeEventListener('click', editableApriballs);
+    })
+    
+    // Push to database via flask.
+    fetch('/update_apriballs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(changedData)
+    })
+    .then(response => response.json())
+    .then (data => {
+      if (data.status === 'success') {
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+    // Remove data.
+    changedData = [];
+    
+    // Finally, swap buttons.
+    editButton.style = '';
+    lockButton.style = 'display: none';
+    
+  });
+
+  function editableApriballs(event) {
+    // Toggle selection.
+    new_selection = parseInt(event.target.dataset.selected) === 1 ? 0 : 1;
+    if (new_selection === 1) { event.target.classList.remove('greyscale') } else { event.target.classList.add('greyscale') };
+    event.target.dataset.selected = new_selection;
+
+    // Store and send click data.
+    var rowData = {
+      'internalId': parseInt(event.target.closest('tr').id),
+      'selected_ball': event.target.dataset.ball,
+      'selected': new_selection
+    };
+    console.log(rowData);
+    changedData.push(rowData);
+  };
+
   // FORM POPUP =======================================================================================================
-  
+
   const addRowBtn = document.getElementById('add-aprimon-btn');
   const popup = document.getElementById('add-aprimon-popup');
-  
+
   addRowBtn.addEventListener('click', function () {
     popup.classList.remove('hidden');
   });
-  
+
   // SEARCH HANDLER ===================================================================================================
-  
+
   const fieldInput = document.getElementById('add-aprimon-input');
   const searchGridContainer = document.getElementById('search-container');
 
@@ -39,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const panel = document.createElement('label');
             panel.classList.add('add-aprimon-search-panel');
-            
+
             const radio = document.createElement('input');
             radio.type = 'radio';
             radio.name = 'aprimon-search-selection';
@@ -56,10 +125,10 @@ document.addEventListener('DOMContentLoaded', function () {
             text.classList.add('panel-text');
             text.textContent = result.name
             panel.appendChild(text)
-            
+
             panel.addEventListener('click', () => {
               let radioButtons = document.querySelectorAll('.add-aprimon-search-panel');
-              radioButtons.forEach(function(l) {
+              radioButtons.forEach(function (l) {
                 l.classList.remove('option_selected');
               });
               panel.classList.add('option_selected');
@@ -87,13 +156,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // Just used to highlight the Pokemon selected. Was having a hard time doing this in pure CSS for some reason.
   const radioButtons = document.querySelectorAll('.add-aprimon-search-panel');
 
-  radioButtons.forEach(function(radio_button) {
-      radio_button.addEventListener('click', function() {
-          radioButtons.forEach(function(l) {
-              l.classList.remove('option_selected');
-          });
-          this.classList.add('option_selected');
+  radioButtons.forEach(function (radio_button) {
+    radio_button.addEventListener('click', function () {
+      radioButtons.forEach(function (l) {
+        l.classList.remove('option_selected');
       });
+      this.classList.add('option_selected');
+    });
   });
   // const searchResults = document.querySelectorAll('.add-aprimon-search-panel input[type="radio"]');
   // let selectedValue = null;
@@ -152,15 +221,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Create an array to store checkbox values in the same order as apriballNames
     const apriballTypes = apriballNames.map(apriballName => {
-        const checkboxValue = formData.get(`checkbox-${apriballName}`) === 'true';
-        return checkboxValue;
+      const checkboxValue = formData.get(`checkbox-${apriballName}`) === 'true';
+      return checkboxValue;
     });
 
     // Now apriballTypes is guaranteed to be a list with true or false values based on the checkboxes' states
     const data = {
-        selectedPokemon: selectedValue,
-        apriballTypes: apriballTypes
-    };  
+      selectedPokemon: selectedValue,
+      apriballTypes: apriballTypes
+    };
 
     fetch('/add_aprimon', {
       method: 'POST',
