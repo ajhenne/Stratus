@@ -45,8 +45,6 @@ def load_user(id):
 
 login_manager.init_app(app)
 
-### ######### ######################################################################
-
 apriballNames = ('fast', 'lure', 'level', 'heavy', 'love', 'moon', 'dream', 'safari', 'beast', 'sport')
 
 ### HOME PAGE ######################################################################
@@ -142,20 +140,9 @@ def search_pokemon():
     
     return jsonify({'status': 'error'})
 
-# Search works great, it pulls up the Pokemon correctly.
-# Now redesign the search form so it displays the results
-# a bit more interactively and nicely.
+####################################################################################
 
-# Then I can move onto editrow.
-
-# Also on reddit there's some comments saying how to use
-# a secure password. Need to set an environmental variable
-# on pythonanywhere and pass that to this script.
-
-
-
-##
 if __name__ == '__main__':
 
-    app.run()
-    # app.run(debug=True)
+    # app.run()
+    app.run(debug=True)
