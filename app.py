@@ -123,8 +123,8 @@ def add_row():
             conn.close()
         return jsonify({'status': 'success'})
     
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
+    except Exception:
+        return jsonify({'error': 'An error occured whilst processing the request'}), 500
 
 @app.route('/update_apriballs', methods=['POST'])
 @login_required
@@ -139,7 +139,7 @@ def update_balls():
         for change in data:
             session.query(Aprimon).filter(Aprimon.internalId == change['internalId']).update({change['selected_ball']: change['selected']})
             session.commit()
-            
+
         return jsonify({'status': 'success', 'message': f'Sucessfully updated {len(data)} records.'}), 200
     
     except Exception:
@@ -165,5 +165,5 @@ def search_pokemon():
 
 if __name__ == '__main__':
 
-    # app.run()
-    app.run(debug=True)
+    app.run()
+    # app.run(debug=True)
