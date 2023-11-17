@@ -15,11 +15,14 @@
 
 <body>
 
+    {% set active_page = 'aprimon' %}
+    {% include 'navbar.html' %}
+    {% include 'login.html' %}
+
     <div id="header-container">
         <div id="title-container">
-            <h1>Aprimon Master Table</h1>
             <p class="acknowledge">Version 0.0.1 | Created by Henne</p>
-            <p>My master table of all Aprimon I own. Where possible, Pokemon with hidden
+            <p>My WIP master table of all Aprimon I own. Where possible, Pokemon with hidden
                 abilities are caught with them. If you have any that I'm missing, don't
                 hesitate to make an offer! Otherwise, if you're looking for anything I
                 have spare, please consult the spare Aprimon table (WIP).
@@ -37,14 +40,12 @@
             <button id="login-button" class="btn-grid {% if login_status %}hidden{% endif %}">Login</button>
             <button id="logout-button" class="btn-grid {% if not login_status %}hidden{% endif %}">Logout</button>
             <button id="edit-button" class="btn-grid" {% if not login_status %}disabled{% endif %}>Edit Table</button>
-            <button id="lock-button" class="btn-grid" style="display: none">Lock Table</button>
+            <button id="lock-button" class="btn-grid" style="display: none">Save Changes</button>
             <button id="add-aprimon-btn" class="btn-grid" {% if not login_status %}disabled{% endif %}>Add Row</button>
         </div>
     </div>
 
-    <!--------------------------------------------------------------------------------------------------------------------------------------->
-    <!-- LOGIN -->
-    {% include 'login.html' %}
+
 
 
     <!--------------------------------------------------------------------------------------------------------------------------------------->

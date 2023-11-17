@@ -1,0 +1,16 @@
+<nav class="navbar">
+    <img id='nav-logo' src="../static/sprites/balls/moon-ball.png" alt="">
+    <div class="nav-container">
+        <div class="nav-title">
+            <span>Stratus</span>
+            <div class="nav-decor-line"><div></div><div></div></div>
+        </div>
+        <div class="nav-buttons">
+            <div class="nav-button-container {% if active_page == 'home' %}active{% endif %}"><a href="#"><img src="../static/sprites/balls/level-ball.png" alt="">Home</a></div>
+            <div class="nav-button-container {% if active_page == 'aprimon' %}active{% endif %}"><a href="#"><img src="../static/sprites/balls/fast-ball.png" alt="">Aprimon Tracker</a></div>
+            <div class="nav-button-container {% if active_page == 'page3' %}active{% endif %}"><a href="#"><img src="../static/sprites/balls/lure-ball.png" alt="">One more</a></div>
+            <div class="nav-button-container {% if active_page == 'page4' %}active{% endif %}"><a href="#"><img src="../static/sprites/balls/love-ball.png" alt="">Plus</a></div>
+
+        </div>
+    </div>
+</nav>
