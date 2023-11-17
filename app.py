@@ -165,5 +165,5 @@ def search_pokemon():
 
 if __name__ == '__main__':
 
-    app.run()
-    # app.run(debug=True)
+    # app.run()
+    app.run(debug=True)
