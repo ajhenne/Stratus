@@ -1,8 +1,16 @@
 * {
     font-family: sans-serif;
+    background-color: var(--background-dark);
 }
 
 :root {
+    --background-dark: #3749c8;
+    --background-light: rgb(216, 216, 216);
+    --accent-primary: #C83791;
+    --accent-primary-faded: #542b44;
+    --accent-secondary: #C8B637;
+    --accent-secondary-highlight: #fbffbe;
+
     --color-grey: rgb(158, 158, 158);
     --color-lightgrey: rgb(187, 187, 187);
     --accent-orange: #b87333;
@@ -25,7 +33,7 @@
 }
 
 .greyscale {
-    filter: grayscale(100%);
+    /* filter: grayscale(100%); */
     opacity: 0.2;
 }
 

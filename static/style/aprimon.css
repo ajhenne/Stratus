@@ -1,3 +1,8 @@
+* {
+    color: white;
+    background-color: var(--background-dark);
+}
+
 /* HEADER GRID */
 
 #header-container {
@@ -44,15 +49,17 @@
 
 .btn-grid-container button {
     padding: 10px;
+    background-color: var(--accent-primary);
+    color: var(--accent-secondary-highlight)
 }
 
 .btn-grid:enabled {
-    color: green;
+    /* color: green; */
     cursor: pointer;
 }
 
 .btn-grid:disabled {
-    color: red;
+    background-color: var(--accent-primary-faded);
 }
 
 /* TABLE GENERAL */
@@ -63,8 +70,25 @@
     border-collapse: collapse;
 }
 
-tr {
-    border-bottom: 1px solid black;
+/* #aprimon-table thead {
+    padding-top: 100px;
+    margin-top: 100px;
+} */
+
+tbody tr {
+    border-bottom: 1px solid var(--accent-secondary);
+    
+}
+
+#aprimon-table .dexnum-cell {
+    text-align: center;
+}
+
+thead th {
+    padding-bottom: 10px;
+    font-size: large;
+    /* color: var(--accent-primary); */
+    border-bottom: 3px solid var(--accent-secondary);
 }
 
 #aprimon-table thead tr .pkmn-name {

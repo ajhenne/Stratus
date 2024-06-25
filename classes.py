@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Table, Column, Integer, Boolean, String, MetaData
+from sqlalchemy import create_engine, Table, Column, Integer, Boolean, String, MetaData, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 Base = declarative_base()
@@ -17,8 +17,9 @@ class Pokemon(Base):
 
 class Aprimon(Base):
     __tablename__ = 'aprimon_master'
-    internalId = Column(Integer, primary_key=True, autoincrement=False)
+    internalId = Column(Integer, ForeignKey('pokemon.internalId'), primary_key=True)
     name = Column(String)
+    dexnum = Column(Integer)
     fast = Column(Boolean)
     lure = Column(Boolean)
     level = Column(Boolean)

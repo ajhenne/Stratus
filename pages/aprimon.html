@@ -44,6 +44,7 @@
 
     <!--------------------------------------------------------------------------------------------------------------------------------------->
     <!-- LOGIN -->
+
     {% include 'login.html' %}
 
 
@@ -91,6 +92,7 @@
     <table id="aprimon-table">
         <thead>
             <tr>
+                <th class="dexnum-cell">#</th>
                 <th class="pkmn-name">Name</th>
                 <th>Fast</th>
                 <th>Lure</th>
@@ -107,6 +109,7 @@
         <tbody>
             {% for row in data %}
             <tr id="{{ row.internalId }}">
+                <td class="dexnum-cell">{{ row.dexnum | dexformat }}</td>
                 <td id="tab-pkmn-name" class="pkmn-name">{{ row.name }}</td>
                 {% for x in ball_list %}
                 <td id="tab-ball-{{ x }}" class="tab-ball-cell">
