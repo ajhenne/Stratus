@@ -5,7 +5,10 @@ from sqlalchemy import create_engine, Table, MetaData, text, insert
 from sqlalchemy.orm import sessionmaker
 from classes import Pokemon, Aprimon
 
+from werkzeug.security import check_password_hash, generate_password_hash
+
 import json
+import os
 
 # Create tables.
 engine = create_engine('sqlite:///database.db')
@@ -34,7 +37,8 @@ USER_NAMES = dict((u[1].name, u[1]) for u in USERS.items())
 app = Flask(__name__, template_folder='pages')
 app.config['SECRET_KEY'] = 'stratus2023'
 app.config.from_object(__name__)
-# admin_pass = 'test'
+
+admin_hashed_pass = os.getenv('STRATUS_KEY')
 
 login_manager = LoginManager()
 login_manager.login_view = "login"
@@ -51,6 +55,11 @@ apriballNames = ('fast', 'lure', 'level', 'heavy', 'love', 'moon', 'dream', 'saf
 
 ### HOME PAGE ######################################################################
 
+
+@app.template_filter('dexformat')
+def dexformat(value):
+    return f"{value:04}"
+
 @app.route('/')
 def index():
     # Check logged in.
@@ -64,16 +73,14 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.json.get('username')
-        if username in USER_NAMES:
-            if login_user(USER_NAMES[username], remember=False):
-                return jsonify({'status': 'success'})
-            else:
-                return jsonify({'status': 'error', 'message': 'Unknown error. Contact a developer.'})
+        username = 'henne'
+        password = request.json.get('password')
+
+        if check_password_hash(admin_hashed_pass, password):
+            login_user(USER_NAMES[username], remember=False)
+            return jsonify({'status': 'success'})
         else:
             return jsonify({'status': 'invalid_pass', 'message': 'Wrong password. Please try again.'})
-    
-    return jsonify({'status': 'error'})
 
 @app.route("/logout")
 @login_required
@@ -111,12 +118,20 @@ def add_row():
 
     try:
         with engine.connect() as conn:
+
+            # Check if this entry is already in Aprimon table.
             already_exists = session.query(Aprimon).filter(Aprimon.internalId == name_id).first()
             if already_exists:
                 return jsonify({'status': 'already_exists'})
-            name = session.query(Pokemon).filter(Pokemon.internalId == name_id).first().name
-            add_pokemon['name'] = name
-
+            
+            # Get information data from Pokemon talb.e
+            pokemon_data = session.query(Pokemon).filter(Pokemon.internalId == name_id).first()
+            if pokemon_data:
+                add_pokemon['name'] = pokemon_data.name
+                add_pokemon['dexnum'] = pokemon_data.dexNum
+            else:
+                return jsonify({'status': 'pokemon_not_found'})
+            
             addrow = insert(table_aprimon).values(**add_pokemon)
             conn.execute(addrow)
             conn.commit()
@@ -165,5 +180,5 @@ def search_pokemon():
 
 if __name__ == '__main__':
 
-    app.run()
-    # app.run(debug=True)
+    # app.run()
+    app.run(debug=True)

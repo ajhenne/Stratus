@@ -1,5 +1,9 @@
 .DS_Store
 
+.login
+
+.backup
+
 ## GitHub python template.
 
 # Byte-compiled / optimized / DLL files
