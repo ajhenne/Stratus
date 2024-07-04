@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "apriscout"
+version = "0.1.0"
+description = "Apriball tracker and manager for your collection."
+authors = ["Adam Hennessy <ahenneuk@live.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Flask = "^3.0.3"
+Flask-Login = "^0.6.3"
+SQLAlchemy = "^2.0.31"
+Werkzeug = "^3.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
