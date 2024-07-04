@@ -3,7 +3,7 @@
     background-color: var(--background-dark);
 }
 
-:root {
+/* :root {
     --background-dark: #3749c8;
     --background-light: rgb(216, 216, 216);
     --accent-primary: #C83791;
@@ -16,6 +16,26 @@
     --accent-orange: #b87333;
     --highlight-orange: #b79b80;
     --obscure-background: rgba(73, 65, 65, 0.5);
+} */
+
+
+:root {
+    --background-dark: #015901;
+    --background-light: #32CD32;
+    --accent-primary: #87CEEB;
+    --accent-primary-faded: #8B4513;
+    --accent-secondary: #C8B637;
+    --accent-secondary-highlight: #fbffbe;
+
+    --color-grey: rgb(158, 158, 158);
+    --color-lightgrey: rgb(187, 187, 187);
+    --accent-orange: #b87333;
+    --highlight-orange: #b79b80;
+    --obscure-background: rgba(73, 65, 65, 0.5);
+
+    
+    --secondary-blue: #87CEEB;
+    --secondary-green: #32CD32;
 }
 
 .hidden {

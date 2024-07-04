@@ -36,9 +36,6 @@
         <div class="btn-grid-container">
             <button id="login-button" class="btn-grid {% if login_status %}hidden{% endif %}">Login</button>
             <button id="logout-button" class="btn-grid {% if not login_status %}hidden{% endif %}">Logout</button>
-            <button id="edit-button" class="btn-grid" {% if not login_status %}disabled{% endif %}>Edit Table</button>
-            <button id="lock-button" class="btn-grid" style="display: none">Lock Table</button>
-            <button id="add-aprimon-btn" class="btn-grid" {% if not login_status %}disabled{% endif %}>Add Row</button>
         </div>
     </div>
 
@@ -70,7 +67,7 @@
                         {% for x in ball_list %}
                         <label for="apriball-{{ x }}" id='form-apriball-{{ x }}' class="form-apriball">{{ x|capitalize }}
                             <input type="checkbox" id="apriball-{{ x }}" name="checkbox-{{ x }}" apriball-type='{{ x }}' value="false">
-                            <img src="static/sprites/balls/{{ x }}-ball.png"id='apriball-image-{{ x }}' class="greyscale" alt=""> 
+                                <img src="static/sprites/balls/{{ x }}-ball.png"id='apriball-image-{{ x }}' class="greyscale" alt=""> 
                         </label>
                         {% endfor %}
                     </div>
@@ -89,39 +86,49 @@
     <!--------------------------------------------------------------------------------------------------------------------------------------->
     <!-- MAIN TABLE -->
 
-    <table id="aprimon-table">
-        <thead>
-            <tr>
-                <th class="dexnum-cell">#</th>
-                <th class="pkmn-name">Name</th>
-                <th>Fast</th>
-                <th>Lure</th>
-                <th>Level</th>
-                <th>Heavy</th>
-                <th>Love</th>
-                <th>Moon</th>
-                <th>Dream</th>
-                <th>Safari</th>
-                <th>Beast</th>
-                <th>Sport</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-            <tr id="{{ row.internalId }}">
-                <td class="dexnum-cell">{{ row.dexnum | dexformat }}</td>
-                <td id="tab-pkmn-name" class="pkmn-name">{{ row.name }}</td>
-                {% for x in ball_list %}
-                <td id="tab-ball-{{ x }}" class="tab-ball-cell">
-                    <img src="../static/sprites/balls/{{ x }}-ball.png" alt=""
-                        data-ball="{{ x }}" data-selected="{{ row[x] }}"
-                        class="{% if row[x] == 0 %}greyscale{% endif %} tab-ball">
-                </td>
+    <div id="main-content-box">
+        <table id="aprimon-table">
+            <thead>
+                <tr>
+                    <th class="dexnum-cell">#</th>
+                    <th class="pkmn-name">Name</th>
+                    <th>Fast</th>
+                    <th>Lure</th>
+                    <th>Level</th>
+                    <th>Heavy</th>
+                    <th>Love</th>
+                    <th>Moon</th>
+                    <th>Dream</th>
+                    <th>Safari</th>
+                    <th>Beast</th>
+                    <th>Sport</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr id="{{ row.internalId }}">
+                    <td class="dexnum-cell">{{ row.dexnum | dexformat }}</td>
+                    <td id="tab-pkmn-name" class="pkmn-name">{{ row.name }}</td>
+                    {% for x in ball_list %}
+                    <td id="tab-ball-{{ x }}" class="tab-ball-cell">
+                        <img src="../static/sprites/balls/{{ x }}-ball.png" alt=""
+                            data-ball="{{ x }}" data-selected="{{ row[x] }}"
+                            class="{% if row[x] == 0 %}greyscale{% endif %} tab-ball">
+                    </td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <div id="edit-grid">
+            <button id="edit-button" class="edit-grid-btn" {% if not login_status %}disabled{% endif %}>Edit Table</button>
+            <button id="lock-button" class="edit-grid-btn" style="display: none">Lock Table</button>
+            <button id="add-aprimon-btn" class="edit-grid-btn" {% if not login_status %}disabled{% endif %}>Add Row</button>
+        </div>
+    </div>
+
+
+
 </body>
 
 <!--------------------------------------------------------------------------------------------------------------------------------------->

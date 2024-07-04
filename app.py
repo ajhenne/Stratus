@@ -68,7 +68,7 @@ def index():
     else:
         check_login_status = False
 
-    return render_template("index.html", title='Stratus')
+    return render_template("index.html", title='ApriScout')
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
