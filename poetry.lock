@@ -74,6 +74,21 @@ Flask = ">=1.0.4"
 Werkzeug = ">=1.0.1"
 
 [[package]]
+name = "flask-navigation"
+version = "0.2.0"
+description = "The navigation of Flask application."
+optional = false
+python-versions = "*"
+files = [
+    {file = "Flask-Navigation-0.2.0.tar.gz", hash = "sha256:c42d30efa989ca877444a410e8a1cd2563546f9effe3d9fe388eedf7a6c69285"},
+    {file = "Flask_Navigation-0.2.0-py2.py3-none-any.whl", hash = "sha256:5b1f5120dbed47f81c0333aefda48972709d9d8506c02a644cb933508c6dabe1"},
+]
+
+[package.dependencies]
+blinker = "*"
+Flask = "*"
+
+[[package]]
 name = "greenlet"
 version = "3.0.3"
 description = "Lightweight in-process concurrent programming"
@@ -359,4 +374,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "e5eb7924d8e3ed61fe1381a089146ef7aa95fea372cf727a061f4309d4f7a7b9"
+content-hash = "7abd8c677c79a309ac978a7c010f23edeb0e99f3ed1ebb3c24a717d493fa24ff"

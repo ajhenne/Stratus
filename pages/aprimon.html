@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="static/style/main.css">
     <link rel="stylesheet" href="static/style/login.css">
     <link rel="stylesheet" href="static/style/aprimon.css">
+    <link rel="stylesheet" href="static/style/navigation.css">
     <script>
 
         var userLoggedIn = (String("{{ login_status }}").toLowerCase() === 'true');
@@ -15,7 +16,22 @@
 
 <body>
 
+    {% include 'navigation.html' %}
+
     <div id="header-container">
+        <div id="header-title">
+            <h1>Aprimon Collection Table</h1>
+            <p class="acknowledge">Version 0.0.1 | Created by Henne</p>
+        </div>
+        <div id="header-content">
+            <p>An Aprimon collection - show off and track all your Aprimon.</p>
+            <p>This website is heavily WIP, including design, functionality and pages. It only as a way to display my database to you, you can't edit mine and you do not have your own page. If there is enough (any) support perhaps this can become a more fully fledged project that allows you to login, store your Pokemon, etc., in a similar way. Though, keep in mind I have no real experience in web or application development like this, so it'd be a long and slow process.</p>
+        </div>
+    </div>
+
+
+
+    <div id="hseader-container">
         <div id="title-container">
             <h1>Aprimon Master Table</h1>
             <p class="acknowledge">Version 0.0.1 | Created by Henne</p>
@@ -32,10 +48,6 @@
                 no real experience in web or application development like this, so it'd
                 be a long and slow process.
             </p>
-        </div>
-        <div class="btn-grid-container">
-            <button id="login-button" class="btn-grid {% if login_status %}hidden{% endif %}">Login</button>
-            <button id="logout-button" class="btn-grid {% if not login_status %}hidden{% endif %}">Logout</button>
         </div>
     </div>
 

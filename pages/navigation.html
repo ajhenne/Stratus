@@ -1,0 +1,11 @@
+<div id="nav-bar-container">
+    <ul>
+        <li><a class="nav-btn nav-btn-first" href="{{ url_for('index') }}">Home</a></li>
+        <li><a class="nav-btn" href="{{ url_for('aprimon') }}">Aprimon</a></li>
+        <li><a class="nav-btn" href="">Example</a></li>
+        <li><a class="nav-btn" href="">Page</a></li>
+        <li><a class="nav-btn" href="">Example</a></li>
+        <li><button id="login-button" class="nav-btn {% if login_status %}hidden{% endif %}">Login</button></li>
+        <li><button id="logout-button" class="nav-btn {% if not login_status %}hidden{% endif %}">Logout</button></li>
+    </ul>
+</div>
