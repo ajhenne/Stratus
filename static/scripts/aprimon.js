@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
             panel.appendChild(radio);
 
             const image = document.createElement('img');
-            image.src = 'static/sprites/pokemon/' + result.internalId + '.png';
+            image.src = result.sprite;
             image.alt = String(result.internalId)
             panel.appendChild(image)
 

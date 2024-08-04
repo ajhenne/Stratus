@@ -28,29 +28,7 @@
             <p>This website is heavily WIP, including design, functionality and pages. It only as a way to display my database to you, you can't edit mine and you do not have your own page. If there is enough (any) support perhaps this can become a more fully fledged project that allows you to login, store your Pokemon, etc., in a similar way. Though, keep in mind I have no real experience in web or application development like this, so it'd be a long and slow process.</p>
         </div>
     </div>
-
-
-
-    <div id="hseader-container">
-        <div id="title-container">
-            <h1>Aprimon Master Table</h1>
-            <p class="acknowledge">Version 0.0.1 | Created by Henne</p>
-            <p>My master table of all Aprimon I own. Where possible, Pokemon with hidden
-                abilities are caught with them. If you have any that I'm missing, don't
-                hesitate to make an offer! Otherwise, if you're looking for anything I
-                have spare, please consult the spare Aprimon table (WIP).
-            </p>
-            <p class="acknowledge">This website is heavily WIP, including design, functionality and pages.
-                It only as a way to display my database to you, you can't edit mine and
-                you do not have your own page. If there is enough (any) support perhaps
-                this can become a more fully fledged project that allows you to login,
-                store your Pokemon, etc., in a similar way. Though, keep in mind I have
-                no real experience in web or application development like this, so it'd
-                be a long and slow process.
-            </p>
-        </div>
-    </div>
-
+    
     <!--------------------------------------------------------------------------------------------------------------------------------------->
     <!-- LOGIN -->
 
@@ -103,7 +81,7 @@
             <thead>
                 <tr>
                     <th class="dexnum-cell">#</th>
-                    <th class="pkmn-name">Name</th>
+                    <th class="pkmn-name" colspan="2">Pokemon</th>
                     <th>Fast</th>
                     <th>Lure</th>
                     <th>Level</th>
@@ -120,6 +98,7 @@
                 {% for row in data %}
                 <tr id="{{ row.internalId }}">
                     <td class="dexnum-cell">{{ row.dexnum | dexformat }}</td>
+                    <td id="tab-sprite"><img class="tab-ball" src="{{ row.sprite }}"></td>
                     <td id="tab-pkmn-name" class="pkmn-name">{{ row.name }}</td>
                     {% for x in ball_list %}
                     <td id="tab-ball-{{ x }}" class="tab-ball-cell">

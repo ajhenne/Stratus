@@ -129,6 +129,7 @@ def add_row():
             if pokemon_data:
                 add_pokemon['name'] = pokemon_data.name
                 add_pokemon['dexnum'] = pokemon_data.dexNum
+                add_pokemon['sprite'] = pokemon_data.sprite
             else:
                 return jsonify({'status': 'pokemon_not_found'})
             
